@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +31,7 @@ import java.util.List;
  * - Supports dynamic resizing.
  * - Ideal for sequential traversal.
  *
+ *
  * UC3: Retrieve Vessel by Vessel ID
  *
  * Goal:
@@ -57,8 +57,34 @@ import java.util.List;
  *   public Vessel getVesselById(String vesselId)
  * - Vessel ID comparison is case-sensitive.
  * - Return null if not found.
+ *
+ *
+ * UC4: Identify High-Performance Vessels
+ *
+ * Goal:
+ * Find vessels with the highest average speed.
+ *
+ * Actor:
+ * User
+ *
+ * Flow:
+ * 1. Program scans all vessel records.
+ * 2. Determines the maximum speed.
+ * 3. Collects all vessels matching that speed.
+ * 4. Displays high-performance vessels.
+ *
+ * Key Concepts Used:
+ * - List traversal
+ * - Maximum value identification
+ * - Conditional filtering
+ * - Multiple object results
+ *
+ * Key Requirements:
+ * - Implement:
+ *   public List<Vessel> getHighPerformanceVessels()
+ * - Return one vessel if there is a unique maximum.
+ * - Return multiple vessels if there is a tie.
  */
-
 public class VesselUtil {
 
     // Stores multiple Vessel object references
@@ -99,5 +125,44 @@ public class VesselUtil {
 
         // Return null if no matching vessel is found
         return null;
+    }
+
+    /**
+     * Identifies all vessels having the highest average speed.
+     *
+     * @return List of vessels with the maximum average speed.
+     *         Returns an empty list if no vessels are available.
+     */
+    public List<Vessel> getHighPerformanceVessels() {
+
+        // Stores all vessels having the maximum average speed
+        List<Vessel> highPerformanceVessels = new ArrayList<>();
+
+        // Check whether the vessel list is empty
+        if (vesselList.isEmpty()) {
+            return highPerformanceVessels;
+        }
+
+        // Initialize maximum speed using the first vessel
+        double maxSpeed = vesselList.get(0).getAverageSpeed();
+
+        // First traversal: Find the maximum average speed
+        for (Vessel vessel : vesselList) {
+
+            if (vessel.getAverageSpeed() > maxSpeed) {
+                maxSpeed = vessel.getAverageSpeed();
+            }
+        }
+
+        // Second traversal: Collect all vessels matching maximum speed
+        for (Vessel vessel : vesselList) {
+
+            if (Double.compare(vessel.getAverageSpeed(), maxSpeed) == 0) {
+                highPerformanceVessels.add(vessel);
+            }
+        }
+
+        // Return all high-performance vessels
+        return highPerformanceVessels;
     }
 }
